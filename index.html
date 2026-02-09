@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prisca Joseph Sanga | Cloud Engineer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { box-sizing: border-box; }
+    * { font-family: 'Syne', sans-serif; }
+    .mono { font-family: 'Space Mono', monospace; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(60px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .animate-slide-up { animation: slideUp 0.8s ease-out forwards; }
+    .animate-slide-in { animation: slideIn 0.6s ease-out forwards; }
+    .animate-fade-in { animation: fadeIn 1s ease-out forwards; }
+    .animate-scale-in { animation: scaleIn 0.5s ease-out forwards; }
+    .animate-pulse { animation: pulse 2s ease-in-out infinite; }
+
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+
+    .project-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .project-card:hover { transform: translateY(-8px) scale(1.02); }
+    .project-card:hover .project-overlay { opacity: 1; }
+    .project-card:hover .project-title { transform: translateY(0); }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link::after { background: #F9A8D4; }
+
+    .skill-icon-box { width: 2rem; height: 2rem; min-width: 2rem; min-height: 2rem; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: #1e293b; border: 1px solid #334155; }
+    .skill-bar { transition: width 1s ease-out; }
+    .skill-fill-animate { transition: width 0.8s ease-out; }
+    .skills-tab { transition: color 0.2s, border-color 0.2s; }
+    .skills-tab.active { border-bottom: 2px solid #F9A8D4; }
+    .magnetic-btn { transition: transform 0.3s ease; }
+    .magnetic-btn:hover { transform: scale(1.05); }
+
+    .typing-cursor {
+      animation: blink 0.7s step-end infinite;
+      color: #FBCFE8;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* First achievement: pop-up on scroll + celebration */
+    @keyframes achievementPop {
+      0% { opacity: 0; transform: scale(0.6); }
+      60% { transform: scale(1.08); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes celebrateSparkle {
+      0% { opacity: 0; transform: scale(0) rotate(0deg); }
+      40% { opacity: 1; transform: scale(1) rotate(180deg); }
+      100% { opacity: 0; transform: scale(1.5) rotate(360deg); }
+    }
+    @keyframes trophyGlow {
+      0%, 100% { filter: drop-shadow(0 0 4px #FFD700); }
+      50% { filter: drop-shadow(0 0 12px #FFD700); }
+    }
+    .achievement-first-card.achievement-visible {
+      animation: achievementPop 0.7s ease-out forwards;
+    }
+    .achievement-first-card.achievement-visible .achievement-sparkle {
+      animation: celebrateSparkle 1s ease-out forwards;
+    }
+    .achievement-first-card.achievement-visible .achievement-trophy-icon {
+      animation: trophyGlow 1.5s ease-in-out 0.3s 3;
+    }
+    /* Click celebration: particles burst out of the box */
+    @keyframes celebrateBurstOut {
+      0% { opacity: 1; transform: translate(0, 0) scale(1); }
+      100% { opacity: 0; transform: translate(var(--bx), var(--by)) scale(0.3); }
+    }
+    .celebration-particle {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      margin-left: -5px;
+      margin-top: -5px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: celebrateBurstOut 0.9s ease-out forwards;
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+  </style>
+</head>
+<body class="h-full">
+  <div id="app-wrapper" class="w-full h-full overflow-auto" style="background-color: #0f172a;">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4 animate-fade-in" style="background: linear-gradient(to bottom, rgba(15,23,42,0.95), transparent);">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="#home" class="nav-page-link text-2xl font-bold tracking-tight" style="color: #F9A8D4;">
+          <span class="mono">{"</span>portfolio<span class="mono">"}</span>
+        </a>
+        <div class="hidden md:flex gap-8">
+          <a href="#home" class="nav-link nav-page-link text-sm uppercase tracking-widest" style="color: #F9A8D4;">Home</a>
+          <a href="#skills" class="nav-link nav-page-link text-sm uppercase tracking-widest" style="color: #F9A8D4;">Skills</a>
+          <a href="#work" class="nav-link nav-page-link text-sm uppercase tracking-widest" style="color: #F9A8D4;">Project</a>
+          <a href="#certifications" class="nav-link nav-page-link text-sm uppercase tracking-widest" style="color: #F9A8D4;">Certifications</a>
+          <a href="#achievements" class="nav-link nav-page-link text-sm uppercase tracking-widest" style="color: #F9A8D4;">Achievements</a>
+          <a href="#resume" class="nav-link nav-page-link text-sm uppercase tracking-widest" style="color: #F9A8D4;">Resume</a>
+          <a href="#contact" class="nav-link nav-page-link text-sm uppercase tracking-widest" style="color: #F9A8D4;">Contact</a>
+        </div>
+        <button class="md:hidden" style="color: #F9A8D4;" aria-label="Menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
+      <div class="max-w-5xl mx-auto w-full py-24 text-center">
+        <!-- Profile picture: put your photo as images/profile.jpg -->
+        <div class="flex justify-center mb-8 animate-slide-up opacity-0">
+          <div class="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full overflow-hidden flex-shrink-0 border-4" style="border-color: #F9A8D4; background: linear-gradient(135deg, #1e293b 0%, #334155 100%);">
+            <img src="images/profile.jpg" alt="Prisca Joseph Sanga" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="w-full h-full hidden flex items-center justify-center" style="background: #1e293b;">
+              <span class="mono text-sm font-bold" style="color: #334155;">Add photo</span>
+            </div>
+          </div>
+        </div>
+        <!-- Name -->
+        <div class="overflow-hidden mb-6">
+          <h1 id="hero-name" class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight animate-slide-up opacity-0 delay-100" style="color: #F9A8D4;">Prisca Joseph<br>Sanga</h1>
+        </div>
+        <!-- Cloud Engineer / Software Developer: large typing text -->
+        <div class="overflow-hidden mb-8 min-h-[4rem] sm:min-h-[5rem] md:min-h-[6rem] flex items-center justify-center">
+          <p id="hero-tagline" class="mono text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-widest animate-slide-up opacity-0 delay-200" style="color: #FBCFE8;"> <span id="hero-typing-text"></span><span id="hero-typing-cursor" class="typing-cursor">|</span></p>
+        </div>
+        <div class="overflow-hidden mb-10">
+          <p id="hero-title" class="text-lg md:text-xl animate-slide-up opacity-0 delay-300" style="color: #FBCFE8;">Building scalable infrastructure with <span style="color: #F9A8D4;">reliability</span> and <span style="color: #F9A8D4;">efficiency</span></p>
+        </div>
+        <div class="flex flex-wrap gap-4 justify-center animate-slide-up opacity-0 delay-400">
+          <a href="#work" class="magnetic-btn nav-page-link px-8 py-4 font-semibold text-sm uppercase tracking-wider" style="background-color: #F9A8D4; color: #0f172a;">View Work</a>
+          <a href="#about-me" class="magnetic-btn px-8 py-4 font-semibold text-sm uppercase tracking-wider border-2" style="border-color: #F9A8D4; color: #F9A8D4;">About Me</a>
+          <a href="#contact" class="magnetic-btn nav-page-link px-8 py-4 border-2 font-semibold text-sm uppercase tracking-wider" style="border-color: #F9A8D4; color: #F9A8D4;">Contact Me</a>
+        </div>
+
+        <!-- About Me (sub-section on home page, below Contact Me) -->
+        <div id="about-me" class="max-w-4xl mx-auto py-16 mt-16 px-6 border-t pt-16" style="border-color: #1e293b;">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6 text-center" style="color: #F9A8D4;">About Me</h2>
+          <p class="text-xl md:text-2xl font-semibold mb-6 text-center" style="color: #F9A8D4;">Hello, my name is Prisca Sanga.</p>
+          <p class="text-lg leading-relaxed text-center" style="color: #FBCFE8;">A Cloud Engineer and Software Developer focused on building scalable, secure, and efficient applications using Amazon Web Services (AWS), with hands-on experience in deploying and managing cloud infrastructure through services such as EC2, S3, RDS, IAM, and VPC. Skilled in backend development, REST API design, database integration, and creating responsive web interfaces, with a strong emphasis on clean code, continuous learning, and delivering reliable real-world solutions.</p>
+        </div>
+      </div>
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-pulse">
+        <div class="flex flex-col items-center gap-2" style="color: #F9A8D4;">
+          <span class="mono text-xs tracking-widest">SCROLL</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M19 12l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-32 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+          <p class="mono text-sm tracking-widest mb-4" style="color: #F9A8D4;">01 / SKILLS</p>
+          <h2 class="text-5xl md:text-6xl font-bold mb-4" style="color: #F9A8D4;">Infrastructure meets<br><span style="color: #F9A8D4;">innovation</span></h2>
+          <p class="max-w-2xl mx-auto" style="color: #FBCFE8;">Click a skill to see proficiency level.</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12 border-b pb-4" style="border-color: #334155;">
+          <button type="button" class="skills-tab active px-6 py-2 mono text-sm uppercase tracking-wider rounded" style="color: #F9A8D4;" data-tab="all">All Skills</button>
+          <button type="button" class="skills-tab px-6 py-2 mono text-sm uppercase tracking-wider rounded" style="color: #FBCFE8;" data-tab="cloud">Cloud Platforms</button>
+          <button type="button" class="skills-tab px-6 py-2 mono text-sm uppercase tracking-wider rounded" style="color: #FBCFE8;" data-tab="programming">Programming & Software</button>
+        </div>
+
+        <!-- Skills content: All / Cloud / Programming toggled by tabs. First 5 per group; label shows specific %. Click to animate fill. -->
+        <div id="skills-panel-all" class="skills-panel space-y-10">
+          <!-- Cloud: Cloud Platforms (3) -->
+          <div class="skill-group cloud-group">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #F9A8D4;">☁️ Cloud Platforms</h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="skill-row cursor-pointer group" data-percent="88"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></span>Amazon Web Services (AWS)</span><span class="skill-pct mono text-sm" style="color: #F9A8D4;">88%</span></div><div class="h-2 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer group" data-percent="82"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></span>Microsoft Azure</span><span class="skill-pct mono text-sm" style="color: #F9A8D4;">82%</span></div><div class="h-2 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer group" data-percent="75"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></span>Google Cloud Platform</span><span class="skill-pct mono text-sm" style="color: #F9A8D4;">75%</span></div><div class="h-2 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+            </div>
+          </div>
+          <!-- Cloud: Core Services (first 5) -->
+          <div class="skill-group cloud-group">
+            <h3 class="text-lg font-bold mb-3" style="color: #F9A8D4;">Core Cloud Services</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="skill-row cursor-pointer" data-percent="90"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6v.01M6 18v.01M18 6v.01M18 18v.01"/></svg></span>EC2</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">90%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="90"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>S3</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">90%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="85"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span>RDS</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">85%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="88"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>IAM</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">88%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="85"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>VPC</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">85%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+            </div>
+          </div>
+          <!-- Cloud: OS & Networking (first 4; group has 4) -->
+          <div class="skill-group cloud-group">
+            <h3 class="text-lg font-bold mb-3" style="color: #F9A8D4;">Operating Systems & Networking</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="skill-row cursor-pointer" data-percent="88"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="currentColor"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.413 1.684-.502 2.528-.121 1.056-.196 2.137-.259 3.217-.028.47-.054.939-.096 1.406-.015.17-.032.34-.054.51-.168 1.264-.383 2.51-.769 3.701-.186.57-.414 1.124-.729 1.634-.209.335-.454.644-.759.902-.304.258-.673.454-1.063.535-.359.076-.73.038-1.092-.086-.352-.12-.682-.303-.972-.533-.29-.23-.538-.506-.737-.816-.199-.31-.346-.653-.448-1.011-.102-.358-.157-.726-.177-1.095-.02-.37-.005-.74.041-1.105.046-.365.118-.726.212-1.082.094-.356.21-.706.345-1.048.27-.685.6-1.35 1.035-1.947.435-.597.97-1.125 1.565-1.565.595-.44 1.24-.793 1.92-1.035.34-.135.687-.25 1.04-.345.354-.094.712-.166 1.073-.212.37-.046.738-.061 1.106-.041.364.02.73.075 1.088.177.358.102.705.249 1.032.448.318.199.601.447.84.737.239.29.434.61.569.972.135.362.194.733.118 1.092-.081.39-.277.759-.535 1.063-.258.305-.567.55-.902.759-.51.315-1.064.543-1.634.729-1.191.386-2.437.601-3.701.769-.17.022-.34.039-.51.054-.467.042-.936.068-1.406.096-1.08.063-2.161.138-3.217.259-.844.089-1.696.224-2.528.502-1.771.589-3.47 1.831-4.521 2.716-1.067.75-1.928.974-3.02 1.05C1.815 23.09-2.669 24.321.021 23.496 4.378 23.191 8.74 23.363 13.096 23.5c1.084.034 2.432.104 3.562-.202.955-.259 1.812-.769 2.521-1.486.709-.717 1.227-1.566 1.486-2.521.306-1.13.236-2.478.202-3.562-.137-4.356-.309-8.718-.615-13.075z"/></svg></span>Linux (Ubuntu, Amazon Linux)</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">88%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="75"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="12" y1="4" x2="12" y2="20"/></svg></span>Windows Server</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">75%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="85"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>TCP/IP, DNS, Subnets</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">85%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="82"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Security Groups, NACLs, VPN</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">82%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+            </div>
+          </div>
+          <!-- Cloud: DevOps & IaC (first 5) -->
+          <div class="skill-group cloud-group">
+            <h3 class="text-lg font-bold mb-3" style="color: #F9A8D4;">DevOps & IaC</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="skill-row cursor-pointer" data-percent="92"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></span>Git / GitHub</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">92%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="88"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>CI/CD pipelines</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">88%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="85"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="currentColor"><path d="M13.983 12.779h.002c.004-.053.015-.105.015-.159 0-.054-.011-.106-.015-.159l-.002.001c-.149-1.076-.893-1.954-1.869-2.43l-.004-.002c-.976-.476-2.072-.476-3.048 0l-.004.002c-.976.476-1.72 1.354-1.869 2.43l-.002-.001c-.004.053-.015.105-.015.159 0 .054.011.106.015.159l.002-.001c.149 1.076.893 1.954 1.869 2.43l.004.002c.488.238 1.024.357 1.524.357.5 0 1.036-.119 1.524-.357l.004-.002c.976-.476 1.72-1.354 1.869-2.43zm-.997-.679c-.539.263-1.185.263-1.724 0-.539-.263-.975-.764-1.214-1.385-.239-.621-.239-1.308 0-1.929.239-.621.675-1.122 1.214-1.385.539-.263 1.185-.263 1.724 0 .539.263.975.764 1.214 1.385.239.621.239 1.308 0 1.929-.239.621-.675 1.122-1.214 1.385z"/><path d="M19.169 10.212c-.239-.621-.675-1.122-1.214-1.385-.539-.263-1.185-.263-1.724 0l-.004.002c-.976.476-1.72 1.354-1.869 2.43l-.002-.001c-.004.053-.015.105-.015.159 0 .054.011.106.015.159l.002-.001c.149 1.076.893 1.954 1.869 2.43l.004.002c.488.238 1.024.357 1.524.357.5 0 1.036-.119 1.524-.357l.004-.002c.976-.476 1.72-1.354 1.869-2.43l.002.001c.004-.053.015-.105.015-.159 0-.054-.011-.106-.015-.159l-.002.001c-.149-1.076-.893-1.954-1.869-2.43l-.004-.002c-.539-.263-1.085-.395-1.631-.395-.259 0-.518.033-.772.098z"/><path d="M4.831 10.212c-.976.476-1.72 1.354-1.869 2.43l-.002-.001c-.004.053-.015.105-.015.159 0 .054.011.106.015.159l.002-.001c.149 1.076.893 1.954 1.869 2.43l.004.002c.488.238 1.024.357 1.524.357.5 0 1.036-.119 1.524-.357l.004-.002c.539-.263.975-.764 1.214-1.385.239-.621.239-1.308 0-1.929-.239-.621-.675-1.122-1.214-1.385-.539-.263-1.185-.263-1.724 0l-.004.002z"/></svg></span>Docker</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">85%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="80"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zM4 8.5l8 4 8-4v7l-8 4-8-4v-7z"/></svg></span>Kubernetes</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">80%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="88"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>Terraform</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">88%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+            </div>
+          </div>
+          <!-- Cloud: Monitoring & Security (first 4) -->
+          <div class="skill-group cloud-group">
+            <h3 class="text-lg font-bold mb-3" style="color: #F9A8D4;">Monitoring & Cloud Security</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="skill-row cursor-pointer" data-percent="85"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>CloudWatch Logs, Metrics & Alarms</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">85%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="88"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>IAM roles & policies</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">88%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="82"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Encryption (KMS), SSL/TLS</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">82%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="85"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>Backup & recovery, Least privilege</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">85%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+            </div>
+          </div>
+
+          <!-- Programming: Languages (first 4) -->
+          <div class="skill-group programming-group">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #F9A8D4;">💻 Programming Languages</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="skill-row cursor-pointer" data-percent="88"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3L2 9l10 6 10-6-10-6zM2 15l10 6 10-6M12 9v12"/></svg></span>Python</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">88%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="85"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h18v18H3V3zm16.525 13.707c-.131-.821-.666-1.511-2.252-2.155-.552-.259-1.165-.438-1.349-.854-.068-.248-.079-.382-.046-.529.085-.436.469-.727 1.191-.727.686 0 1.052.224 1.507.646.054.052.107.107.161.161l1.312-1.312c-.057-.057-.113-.121-.166-.166-.877-.878-2.034-1.261-3.349-1.261-1.736 0-2.963.902-3.519 2.165-.239.519-.261.993-.067 1.449.379.899 1.331 1.538 2.665 1.924.762.247 1.218.568 1.313.987.117.486-.034.994-.333 1.349-.448.528-1.254.704-2.115.704-1.595 0-2.466-.729-2.862-1.313-.129-.22-.258-.455-.258-.719L8.469 15.5c.052.12.104.229.166.343.814 1.241 2.379 1.766 3.729 1.766 1.806 0 3.026-.938 3.567-2.305.273-.678.321-1.214.321-1.471-.009-.522-.117-.945-.329-1.292zM12 15.5H9.5v-6H12v6zm2.5 0H14v-6h.5v6z"/></svg></span>JavaScript</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">85%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="78"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="currentColor"><path d="M8.851 18.56s-.917.534.653.714c2.055.188 2.945.093 4.856-.094 0 0 .552.346 1.321.646-4.656 2.012-10.422-.119-6.83-1.266zm-.583-2.479s-1.026.761.542.924c2.032.209 3.636.227 6.413-.094 0 0 .384.389.987.602-5.879 1.661-12.031.089-7.942-1.432zm1.815-2.617s-1.214.908.455 1.055c2.148.191 4.793.125 7.559-.188 0 0 .199.469.769.646-6.531 1.476-13.396.062-8.783-1.513zM8.276 15.933s-1.002.534.612.761c2.086.239 4.396.227 6.897-.062 0 0 .235.444.909.6-5.154 1.169-10.559.149-8.418-1.299zm2.645-3.235s-1.121.825.398 1.054c2.006.239 4.739.209 7.631-.149 0 0 .314.494.912.706-6.619 1.475-13.319.149-8.941-1.611zm4.645-2.793c-4.927-.746-8.57-.314-10.185.149-1.07.305-1.577.597-1.577.597s.305-.418 1.003-.682c2.541-1.006 6.456-1.357 11.12.149 0-.001.537.314.769.597.314-.419.455-.761.455-.761s-.314-.224-1.585-.051zm-2.354 1.432c-3.927-.569-6.825-.209-8.13.149-.855.239-1.214.419-1.214.419s.419-.314 1.139-.494c2.621-.657 6.091-.761 10.022.149 0 0 .314.239.612.419.209-.314.314-.537.314-.537s-.209-.179-.731-.095zm-6.531 6.02s-4.927 1.641-1.731 1.866c5.422.389 12.772-.062 16.394-1.015 0-.001.537.314 1.139.537-4.656 1.641-15.802 1.353-15.802-.209 0-1.179 0-1.179 0-1.179zM9.184 23.587c4.605.239 10.648-.062 14.276-.761 0 0 .611.314 1.003.494-3.354 1.075-10.559 1.353-15.468.761 0 0 .209.419.189.506zm4.093-5.674c-5.422-.761-9.386-.419-11.082.149-1.139.374-1.432.612-1.432.612s.687-.419 1.731-.612c3.354-.612 7.631-.374 12.031.537 0 0 .493.239.761.374.314-.419.419-.761.419-.761s-.374-.239-2.428-.299z"/></svg></span>Java</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">78%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="72"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>C / C++</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">72%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+            </div>
+          </div>
+          <!-- Programming: Frontend & Backend (first 5) -->
+          <div class="skill-group programming-group">
+            <h3 class="text-lg font-bold mb-3" style="color: #F9A8D4;">Frontend & Backend</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="skill-row cursor-pointer" data-percent="90"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>HTML5, CSS, JavaScript (ES6+)</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">90%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="85"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/><path d="M12 21.35c-1.13 0-2.17-.34-3.07-.95-.45-.3-.84-.67-1.18-1.09-.34-.42-.62-.88-.84-1.38-.22-.5-.33-1.02-.33-1.55 0-1.13.34-2.17.95-3.07.3-.45.67-.84 1.09-1.18.42-.34.88-.62 1.38-.84.5-.22 1.02-.33 1.55-.33.53 0 1.05.11 1.55.33.5.22.96.5 1.38.84.42.34.79.73 1.09 1.18.61.9.95 1.94.95 3.07 0 .53-.11 1.05-.33 1.55-.22.5-.5.96-.84 1.38-.34.42-.73.79-1.18 1.09-.9.61-1.94.95-3.07.95z"/></svg></span>React.js</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">85%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="85"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>Responsive Design</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">85%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="85"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></span>Node.js, Express.js</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">85%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="82"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span>Database Design</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">82%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+            </div>
+          </div>
+          <!-- Programming: Software Engineering (2) -->
+          <div class="skill-group programming-group">
+            <h3 class="text-lg font-bold mb-3" style="color: #F9A8D4;">Software Engineering Fundamentals</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="skill-row cursor-pointer" data-percent="88"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg></span>OOP, Data Structures, Algorithms</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">88%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+              <div class="skill-row cursor-pointer" data-percent="90"><div class="flex justify-between mb-1"><span class="flex items-center gap-2" style="color: #FBCFE8;"><span class="skill-icon-box"><svg class="w-4 h-4 flex-shrink-0" style="color: #F9A8D4;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>Clean Code Practices</span><span class="skill-pct mono text-xs" style="color: #F9A8D4;">90%</span></div><div class="h-1.5 rounded-full" style="background: #1e293b;"><div class="skill-fill skill-fill-animate h-full rounded-full" style="width: 0%; background: #F9A8D4;"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-32 px-6" style="background-color: #1e293b;">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <p class="mono text-sm tracking-widest mb-4" style="color: #F9A8D4;">02 / ACHIEVEMENTS</p>
+          <h2 class="text-5xl md:text-6xl font-bold" style="color: #F9A8D4;">Awards &<br><span style="color: #F9A8D4;">recognition</span></h2>
+          <p class="max-w-2xl mx-auto mt-6" style="color: #FBCFE8;">Highlights and milestones in my cloud and engineering journey.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div id="achievement-first-card" class="achievement-first-card rounded-2xl p-6 relative overflow-visible opacity-0 cursor-pointer" style="background: #0f172a; border: 1px solid #334155;">
+            <!-- Container for click celebration particles (burst out of box) -->
+            <div id="achievement-celebration-burst" class="absolute inset-0 pointer-events-none overflow-visible" style="z-index: 10; border-radius: inherit;"></div>
+            <!-- Celebration sparkles (animate when card pops in) -->
+            <span class="achievement-sparkle absolute w-2 h-2 rounded-full opacity-0" style="background: #F9A8D4; top: 10%; left: 10%; animation-delay: 0.1s;"></span>
+            <span class="achievement-sparkle absolute w-2 h-2 rounded-full opacity-0" style="background: #FBCFE8; top: 15%; right: 15%; animation-delay: 0.2s;"></span>
+            <span class="achievement-sparkle absolute w-2 h-2 rounded-full opacity-0" style="background: #F9A8D4; bottom: 20%; left: 20%; animation-delay: 0.3s;"></span>
+            <span class="achievement-sparkle absolute w-2 h-2 rounded-full opacity-0" style="background: #FBCFE8; bottom: 15%; right: 10%; animation-delay: 0.15s;"></span>
+            <span class="achievement-sparkle absolute w-2 h-2 rounded-full opacity-0" style="background: #F9A8D4; top: 50%; left: 5%; animation-delay: 0.25s;"></span>
+            <span class="achievement-sparkle absolute w-2 h-2 rounded-full opacity-0" style="background: #FBCFE8; top: 40%; right: 5%; animation-delay: 0.35s;"></span>
+            <div class="flex items-center gap-3 mb-2 relative z-0">
+              <span class="achievement-trophy-icon flex-shrink-0" style="color: #FFD700;">
+                <svg class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H8v2h8v-2h-3v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
+              </span>
+              <h3 class="text-xl font-bold" style="color: #F9A8D4;">100 LeetCode Questions Solved</h3>
+            </div>
+            <p class="mono text-sm" style="color: #FBCFE8;">Achieved a recognition of solving 100 plus coding questions.</p>
+          </div>
+          <div class="rounded-2xl p-6" style="background: #0f172a; border: 1px solid #334155;">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="flex-shrink-0" style="color: #FFD700;">
+                <svg class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </span>
+              <h3 class="text-xl font-bold" style="color: #F9A8D4;">Solved 300+ coding problems in several online platforms.</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-32 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <p class="mono text-sm tracking-widest mb-4" style="color: #F9A8D4;">03 / CERTIFICATIONS</p>
+          <h2 class="text-5xl md:text-6xl font-bold" style="color: #F9A8D4;">Professional<br><span style="color: #F9A8D4;">credentials</span></h2>
+          <p class="max-w-2xl mx-auto mt-6" style="color: #FBCFE8;">Industry-recognized certifications validating expertise in cloud technologies and best practices.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Certificate 1: cert1.jpg (placeholder cert1.svg until you add the image) -->
+          <div class="cert-card rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-2" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 flex items-center justify-center" style="background: #0f172a;">
+              <img src="certificates/cert1.jpg" alt="Privacy and Security in Online Social Media" class="max-w-full max-h-full w-auto h-auto object-contain object-center cert-main" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <img src="certificates/cert1.svg" alt="Privacy and Security in Online Social Media" class="max-w-full max-h-full w-auto h-auto object-contain object-center hidden" style="display: none;">
+            </div>
+            <h3 class="text-xl font-bold mb-2" style="color: #F9A8D4;">Privacy and Security in Online Social Media</h3>
+            <p class="mono text-sm" style="color: #F9A8D4;">Certificate</p>
+          </div>
+          <!-- Certificate 2: cert2.jpg (placeholder cert2.svg until you add the image) -->
+          <div class="cert-card rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-2" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 flex items-center justify-center" style="background: #0f172a;">
+              <img src="certificates/cert2.jpg" alt="Basics of Data Structure and Algorithm" class="max-w-full max-h-full w-auto h-auto object-contain object-center cert-main" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <img src="certificates/cert2.svg" alt="Basics of Data Structure and Algorithm" class="max-w-full max-h-full w-auto h-auto object-contain object-center hidden" style="display: none;">
+            </div>
+            <h3 class="text-xl font-bold mb-2" style="color: #F9A8D4;">Basics of Data Structure and Algorithm</h3>
+            <p class="mono text-sm" style="color: #F9A8D4;">Certificate</p>
+          </div>
+          <!-- Certificate 3: cert3.jpg (placeholder cert3.svg until you add the image) -->
+          <div class="cert-card rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-2" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 flex items-center justify-center" style="background: #0f172a;">
+              <img src="certificates/cert3.jpg" alt="Master in Generative AI and Generative AI Tools" class="max-w-full max-h-full w-auto h-auto object-contain object-center cert-main" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <img src="certificates/cert3.svg" alt="Master in Generative AI and Generative AI Tools" class="max-w-full max-h-full w-auto h-auto object-contain object-center hidden" style="display: none;">
+            </div>
+            <h3 class="text-xl font-bold mb-2" style="color: #F9A8D4;">Master in Generative AI and Generative AI Tools</h3>
+            <p class="mono text-sm" style="color: #F9A8D4;">Certificate</p>
+          </div>
+          <!-- Certificate 4: cert4.jpg (placeholder cert4.svg until you add the image) -->
+          <div class="cert-card rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-2" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 flex items-center justify-center" style="background: #0f172a;">
+              <img src="certificates/cert4.jpg" alt="AI Essentials for Beginners" class="max-w-full max-h-full w-auto h-auto object-contain object-center cert-main" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <img src="certificates/cert4.svg" alt="AI Essentials for Beginners" class="max-w-full max-h-full w-auto h-auto object-contain object-center hidden" style="display: none;">
+            </div>
+            <h3 class="text-xl font-bold mb-2" style="color: #F9A8D4;">AI Essentials for Beginners</h3>
+            <p class="mono text-sm" style="color: #F9A8D4;">Certificate</p>
+          </div>
+          </div>
+      </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="py-32 px-6" style="background-color: #1e293b;">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16">
+          <div>
+            <p class="mono text-sm tracking-widest mb-4" style="color: #F9A8D4;">04 / WORK</p>
+            <h2 class="text-5xl md:text-6xl font-bold" style="color: #F9A8D4;">Selected<br><span style="color: #F9A8D4;">projects</span></h2>
+          </div>
+          <p class="max-w-md" style="color: #FBCFE8;">A selection of cloud and infrastructure work—migrations, automation, and scalable systems.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- 1. Automatic Attendance System -->
+          <div class="project-card rounded-2xl overflow-hidden relative group cursor-pointer" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="aspect-[4/3] overflow-hidden bg-[#0f172a]">
+              <img src="images/projects/project1.jpg" alt="Automatic Attendance System" class="w-full h-full object-cover" />
+            </div>
+            <div class="project-overlay absolute inset-0 opacity-0 flex items-end p-8" style="background: linear-gradient(to top, rgba(15,23,42,0.95), transparent);">
+              <div class="project-title transform translate-y-4">
+                <p class="mono text-sm" style="color: #F9A8D4;">Project</p>
+                <h3 class="text-2xl font-bold" style="color: #F9A8D4;">Automatic Attendance System</h3>
+              </div>
+            </div>
+          </div>
+          <!-- 2. Financial Management System -->
+          <div class="project-card rounded-2xl overflow-hidden relative group cursor-pointer" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="aspect-[4/3] overflow-hidden bg-[#0f172a]">
+              <img src="images/projects/project2.jpg" alt="Financial Management System" class="w-full h-full object-cover" />
+            </div>
+            <div class="project-overlay absolute inset-0 opacity-0 flex items-end p-8" style="background: linear-gradient(to top, rgba(15,23,42,0.95), transparent);">
+              <div class="project-title transform translate-y-4">
+                <p class="mono text-sm" style="color: #F9A8D4;">Project</p>
+                <h3 class="text-2xl font-bold" style="color: #F9A8D4;">Financial Management System</h3>
+              </div>
+            </div>
+          </div>
+          <!-- 3. Online Cosmetics Shopping Website -->
+          <div class="project-card rounded-2xl overflow-hidden relative group cursor-pointer" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="aspect-[4/3] overflow-hidden bg-[#0f172a]">
+              <img src="images/projects/project3.jpg" alt="Online Cosmetics Shopping Website" class="w-full h-full object-cover" />
+            </div>
+            <div class="project-overlay absolute inset-0 opacity-0 flex items-end p-8" style="background: linear-gradient(to top, rgba(15,23,42,0.95), transparent);">
+              <div class="project-title transform translate-y-4">
+                <p class="mono text-sm" style="color: #F9A8D4;">Project</p>
+                <h3 class="text-2xl font-bold" style="color: #F9A8D4;">Online Cosmetics Shopping Website</h3>
+              </div>
+            </div>
+          </div>
+          <!-- 4. Online Website for Hardware Store -->
+          <div class="project-card rounded-2xl overflow-hidden relative group cursor-pointer" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="aspect-[4/3] overflow-hidden bg-[#0f172a]">
+              <img src="images/projects/project4.jpg" alt="Online Website for Hardware Store" class="w-full h-full object-cover" />
+            </div>
+            <div class="project-overlay absolute inset-0 opacity-0 flex items-end p-8" style="background: linear-gradient(to top, rgba(15,23,42,0.95), transparent);">
+              <div class="project-title transform translate-y-4">
+                <p class="mono text-sm" style="color: #F9A8D4;">Project</p>
+                <h3 class="text-2xl font-bold" style="color: #F9A8D4;">Online Website for Hardware Store</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume" class="py-32 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <p class="mono text-sm tracking-widest mb-4" style="color: #F9A8D4;">05 / RESUME</p>
+          <h2 class="text-5xl md:text-6xl font-bold mb-6" style="color: #F9A8D4;">My<br><span style="color: #F9A8D4;">resume</span></h2>
+          <p class="max-w-2xl mx-auto" style="color: #FBCFE8;">Education and qualifications.</p>
+        </div>
+
+        <!-- Education Timeline -->
+        <div class="max-w-3xl mx-auto space-y-8">
+          <!-- LPU -->
+          <div class="rounded-2xl p-6 md:p-8" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+              <h3 class="text-xl font-bold" style="color: #F9A8D4;">Lovely Professional University</h3>
+              <span class="mono text-sm whitespace-nowrap" style="color: #F9A8D4;">Since August 2023</span>
+            </div>
+            <p class="text-sm mb-2" style="color: #F9A8D4;">Punjab, India</p>
+            <p class="text-lg font-semibold mb-1" style="color: #FBCFE8;">Bachelor of Technology — Computer Science and Engineering</p>
+            <p class="mono text-sm" style="color: #FBCFE8;">CGPA: 6.7</p>
+          </div>
+
+          <!-- BrightFuture High School -->
+          <div class="rounded-2xl p-6 md:p-8" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+              <h3 class="text-xl font-bold" style="color: #F9A8D4;">BrightFuture High School</h3>
+              <span class="mono text-sm whitespace-nowrap" style="color: #F9A8D4;">August 2021 – May 2023</span>
+            </div>
+            <p class="text-sm mb-2" style="color: #F9A8D4;">Dar es Salaam, Tanzania</p>
+            <p class="text-lg font-semibold mb-1" style="color: #FBCFE8;">Intermediate</p>
+            <p class="mono text-sm" style="color: #FBCFE8;">Percentage: 90%</p>
+          </div>
+
+          <!-- Kandoto Secondary School -->
+          <div class="rounded-2xl p-6 md:p-8" style="background: #1e293b; border: 1px solid #334155;">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+              <h3 class="text-xl font-bold" style="color: #F9A8D4;">Kandoto Secondary School</h3>
+              <span class="mono text-sm whitespace-nowrap" style="color: #F9A8D4;">Jan 2017 – Nov 2020</span>
+            </div>
+            <p class="text-sm mb-2" style="color: #F9A8D4;">Moshi, Tanzania</p>
+            <p class="text-lg font-semibold mb-1" style="color: #FBCFE8;">Matriculation</p>
+            <p class="mono text-sm" style="color: #FBCFE8;">Percentage: 87.8%</p>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <a href="documents/cv.pdf" target="_blank" rel="noopener noreferrer" class="magnetic-btn inline-flex items-center gap-3 px-10 py-4 font-semibold text-sm uppercase tracking-wider rounded-full" style="background-color: #F9A8D4; color: #0f172a;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download my CV
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 relative overflow-hidden">
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-16">
+          <p class="mono text-sm tracking-widest mb-4" style="color: #F9A8D4;">06 / CONTACT</p>
+          <h2 class="text-5xl md:text-7xl font-bold" style="color: #F9A8D4;">Let's build<br><span style="color: #F9A8D4;">together</span></h2>
+          <p class="max-w-2xl mx-auto text-lg mt-6" style="color: #FBCFE8;">Have an infrastructure or cloud project in mind? I'd love to hear about it.</p>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="max-w-xl mx-auto mb-16">
+          <form id="contact-form" class="space-y-6 rounded-2xl p-8" style="background: #1e293b; border: 1px solid #334155;">
+            <div>
+              <label for="contact-name" class="block text-sm font-medium mb-2" style="color: #FBCFE8;">Name</label>
+              <input type="text" id="contact-name" name="name" required placeholder="Your name" class="w-full px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-white/50 transition-colors" style="background: #0f172a; border: 1px solid #334155; color: #F9A8D4;" />
+            </div>
+            <div>
+              <label for="contact-phone" class="block text-sm font-medium mb-2" style="color: #FBCFE8;">Contact number</label>
+              <input type="tel" id="contact-phone" name="phone" required placeholder="Your contact number" class="w-full px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-white/50 transition-colors" style="background: #0f172a; border: 1px solid #334155; color: #F9A8D4;" />
+            </div>
+            <div>
+              <label for="contact-message" class="block text-sm font-medium mb-2" style="color: #FBCFE8;">Message</label>
+              <textarea id="contact-message" name="message" required rows="5" placeholder="Your message..." class="w-full px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-white/50 transition-colors resize-none" style="background: #0f172a; border: 1px solid #334155; color: #F9A8D4;"></textarea>
+            </div>
+            <button type="submit" class="magnetic-btn w-full px-8 py-4 font-semibold text-sm uppercase tracking-wider rounded-xl" style="background-color: #F9A8D4; color: #0f172a;">Send message</button>
+          </form>
+        </div>
+
+        <div class="text-center space-y-8">
+          <p class="mono text-sm" style="color: #F9A8D4;">Or reach me directly</p>
+          <a id="contact-email-link" href="mailto:priscasanga943@gmail.com" class="magnetic-btn inline-flex items-center gap-4 px-12 py-6 rounded-full font-semibold text-lg" style="background-color: #F9A8D4; color: #0f172a;">
+            <span id="contact-email-display">priscasanga943@gmail.com</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
+          </a>
+          <div class="flex justify-center gap-6 pt-8">
+            <a href="#" class="w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 hover:border-[#F9A8D4] hover:text-[#F9A8D4]" style="border: 1px solid #334155; color: #FBCFE8;" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+            </a>
+            <a href="https://github.com/PriscaJoseph716" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 hover:border-[#F9A8D4] hover:text-[#F9A8D4]" style="border: 1px solid #334155; color: #FBCFE8;" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg>
+            </a>
+            <a href="https://wa.me/917696393971" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 hover:border-[#25D366] hover:text-[#25D366]" style="border: 1px solid #334155; color: #FBCFE8;" aria-label="WhatsApp">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/917696393971" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110" style="background-color: #25D366;" aria-label="Chat on WhatsApp">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t" style="border-color: #1e293b;">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="mono text-sm" style="color: #F9A8D4;">© 2025 Prisca Joseph Sanga. All rights reserved.</p>
+        <p class="mono text-sm" style="color: #F9A8D4;">Crafted with <span style="color: #F9A8D4;">♥</span> and code</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Page view: show only one section at a time (tabs as pages)
+    (function() {
+      var pageIds = ['home', 'skills', 'achievements', 'certifications', 'work', 'resume', 'contact'];
+
+      function showPage(pageId) {
+        pageId = pageId || 'home';
+        pageIds.forEach(function(id) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          var isHome = (pageId === 'home' && id === 'home');
+          var isCurrent = id === pageId;
+          el.style.display = (isHome || isCurrent) ? '' : 'none';
+        });
+      }
+
+      function getPageFromHash() {
+        var hash = window.location.hash.slice(1);
+        return hash || 'home';
+      }
+
+      function handleNavClick(e) {
+        var link = e.target.closest('.nav-page-link');
+        if (!link || !link.getAttribute('href').match(/^#/)) return;
+        e.preventDefault();
+        var pageId = link.getAttribute('href').slice(1);
+        showPage(pageId);
+        window.location.hash = pageId;
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        showPage(getPageFromHash());
+        document.body.addEventListener('click', handleNavClick);
+      });
+      window.addEventListener('hashchange', function() { showPage(getPageFromHash()); });
+    })();
+
+    // Typing effect for hero tagline
+    (function() {
+      var phrases = ['CLOUD ENGINEER', 'SOFTWARE DEVELOPER'];
+      var el = document.getElementById('hero-typing-text');
+      var cursor = document.getElementById('hero-typing-cursor');
+      if (!el) return;
+      var i = 0, j = 0;
+      var typing = true;
+      var typeSpeed = 80;
+      var deleteSpeed = 50;
+      var pauseAfterType = 2000;
+      var pauseAfterDelete = 600;
+      var timeout;
+
+      function run() {
+        var phrase = phrases[i];
+        if (typing) {
+          if (j <= phrase.length) {
+            el.textContent = phrase.slice(0, j);
+            j++;
+            timeout = setTimeout(run, typeSpeed);
+          } else {
+            typing = false;
+            j = phrase.length;
+            timeout = setTimeout(run, pauseAfterType);
+          }
+        } else {
+          if (j > 0) {
+            j--;
+            el.textContent = phrase.slice(0, j);
+            timeout = setTimeout(run, deleteSpeed);
+          } else {
+            typing = true;
+            i = (i + 1) % phrases.length;
+            timeout = setTimeout(run, pauseAfterDelete);
+          }
+        }
+      }
+      setTimeout(function() { run(); }, 800);
+    })();
+
+    // Contact form: open mailto with form data
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name = document.getElementById('contact-name').value.trim();
+      var phone = document.getElementById('contact-phone').value.trim();
+      var message = document.getElementById('contact-message').value.trim();
+      var subject = encodeURIComponent('Contact from Portfolio - ' + name);
+      var body = encodeURIComponent('Name: ' + name + '\nContact number: ' + phone + '\n\nMessage:\n' + message);
+      window.location.href = 'mailto:priscasanga943@gmail.com?subject=' + subject + '&body=' + body;
+    });
+
+    // Smooth scroll for in-page # links (nav uses page switching above)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      if (anchor.classList.contains('nav-page-link')) return;
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Skills tabs: All / Cloud / Programming
+    (function() {
+      var tabs = document.querySelectorAll('.skills-tab');
+      var cloudGroups = document.querySelectorAll('.cloud-group');
+      var programmingGroups = document.querySelectorAll('.programming-group');
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var t = this.getAttribute('data-tab');
+          tabs.forEach(function(x) {
+            x.classList.remove('active');
+            x.style.color = '#FBCFE8';
+          });
+          this.classList.add('active');
+          this.style.color = '#F9A8D4';
+          cloudGroups.forEach(function(el) { el.style.display = (t === 'all' || t === 'cloud') ? '' : 'none'; });
+          programmingGroups.forEach(function(el) { el.style.display = (t === 'all' || t === 'programming') ? '' : 'none'; });
+        });
+      });
+    })();
+
+    // Skill row click: reset bar then animate fill to percent (same effect every time)
+    document.querySelectorAll('.skill-row').forEach(function(row) {
+      row.addEventListener('click', function() {
+        var pct = parseInt(this.getAttribute('data-percent'), 10) || 0;
+        var fill = this.querySelector('.skill-fill');
+        var label = this.querySelector('.skill-pct');
+        if (!fill || !label) return;
+        var targetPct = pct;
+        fill.style.width = '0%';
+        label.textContent = '0%';
+        fill.style.width = targetPct + '%';
+        var n = 0;
+        var step = Math.max(1, Math.ceil(targetPct / 25));
+        var iv = setInterval(function() {
+          n += step;
+          if (n >= targetPct) { n = targetPct; clearInterval(iv); }
+          label.textContent = n + '%';
+        }, 40);
+      });
+    });
+
+    // Intersection Observer for scroll animations
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide-up');
+          entry.target.style.opacity = '1';
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('section > div').forEach(el => observer.observe(el));
+
+    // First achievement: pop-up when scrolled into view (runs once)
+    const achievementCard = document.getElementById('achievement-first-card');
+    const celebrationBurst = document.getElementById('achievement-celebration-burst');
+    const celebrationColors = ['#FFD700', '#F9A8D4', '#FBCFE8', '#FCD34D', '#F59E0B', '#A78BFA', '#34D399', '#F472B6', '#FFFFFF', '#FDE68A'];
+    function runAchievementCelebration() {
+      if (!achievementCard || !celebrationBurst) return;
+      celebrationBurst.innerHTML = '';
+      var count = 24;
+      var distance = 120 + Math.random() * 60;
+      for (var i = 0; i < count; i++) {
+        var angle = (i / count) * 2 * Math.PI + Math.random() * 0.5;
+        var bx = Math.cos(angle) * distance * (0.8 + Math.random() * 0.4);
+        var by = Math.sin(angle) * distance * (0.8 + Math.random() * 0.4);
+        var particle = document.createElement('span');
+        particle.className = 'celebration-particle';
+        particle.style.background = celebrationColors[i % celebrationColors.length];
+        particle.style.setProperty('--bx', bx + 'px');
+        particle.style.setProperty('--by', by + 'px');
+        particle.style.animationDelay = (Math.random() * 0.15) + 's';
+        celebrationBurst.appendChild(particle);
+      }
+      setTimeout(function() { celebrationBurst.innerHTML = ''; }, 1000);
+    }
+    if (achievementCard) {
+      var achievementObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('achievement-visible');
+            achievementObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2, rootMargin: '0px 0px -80px 0px' });
+      achievementObserver.observe(achievementCard);
+      achievementCard.addEventListener('click', function() {
+        runAchievementCelebration();
+      });
+    }
+  </script>
+</body>
+</html>
